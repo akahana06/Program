@@ -5,12 +5,12 @@ using static AssignmentApp.User;
 
 namespace AssignmentApp
 {
-    class Patient : User
+    class Admin : User
     {
-        
-        public Patient()
+
+        public Admin()
         {
-            UserRole = Role.Doctor;
+            UserRole = Role.Admin;
         }
 
         public override void MainMenu()
