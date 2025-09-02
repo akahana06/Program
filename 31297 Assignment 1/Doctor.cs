@@ -21,11 +21,12 @@ namespace AssignmentApp
         public override void MainMenu()
         {
             Console.WriteLine("Hallo");
+            Console.WriteLine("Halloooo");
         }
 
         // test
 
-
+        // New line
 
     }
 }
