@@ -15,11 +15,5 @@ namespace AssignmentApp
             this.dateTime = dateTime;
         }
 
-        public int Name
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
     }
 }

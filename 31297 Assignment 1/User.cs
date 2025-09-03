@@ -23,8 +23,7 @@ namespace AssignmentApp
 
         public void LoadUser(string line)
         {
-            string[] u = line.split(',');
-            Role = u[0];
+            string[] u = line.Split(',');
             id = Convert.ToInt32(u[1]);
             password = u[2];
             name = u[3];
