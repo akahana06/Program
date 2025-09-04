@@ -9,6 +9,7 @@ namespace AssignmentApp
     static class FileManager
     {
         public static ArrayList users = new ArrayList();
+        public static ArrayList appointments = new ArrayList();
         public static void InitialiseUsers(string filename)
         {
             StreamReader sr = new StreamReader(filename);
@@ -16,19 +17,19 @@ namespace AssignmentApp
             {
                 string line = sr.ReadLine();
                 string[] u = line.Split(',');
-                if (u[0] == "Admin")
+                if (u[0] == "A")
                 {
                     Admin a = new Admin();
                     a.LoadUser(line);
                     users.Add(a);
                 }
-                else if (u[0] == "Patient")
+                else if (u[0] == "P")
                 {
                     Patient p = new Patient();
                     p.LoadUser(line);
                     users.Add(p);
                 }
-                else if (u[0] == "Doctor")
+                else if (u[0] == "D")
                 {
                     Doctor d = new Doctor();
                     d.LoadUser(line);
@@ -40,10 +41,10 @@ namespace AssignmentApp
 
         }
 
-        public static Appointment BookAppointment(Patient patient, Doctor doctor, DateTime dateTime)
-        {
-            return default(Appointment);
-        }
+       //public static Appointment BookAppointment(Patient patient, Doctor doctor)
+       // {
+            
+        //}
 
 
 

@@ -7,12 +7,15 @@ namespace AssignmentApp
 
         private Patient patient;
         private Doctor doctor;
-        private DateTime dateTime;
-        public Appointment(Patient patient, Doctor doctor, DateTime dateTime)
+        private string desc;
+        public Appointment(Patient patient, Doctor doctor, string desc)
         {
             this.patient = patient;
             this.doctor = doctor;
-            this.dateTime = dateTime;
+            this.desc = desc;
+            patient.appointments.Add(this);
+            doctor.appointments.Add(this);
+            FileManager.appointments.Add(this);
         }
 
     }

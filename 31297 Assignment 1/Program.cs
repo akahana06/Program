@@ -10,11 +10,12 @@ namespace AssignmentApp
 
             // temp login
             FileManager.InitialiseUsers("users.txt");
-            Console.WriteLine("_________________________________________");
-            Console.WriteLine("|   DOTNET Hospital Management System   |");
-            Console.WriteLine("|---------------------------------------|");
-            Console.WriteLine("|                 Login                 |");
-            Console.WriteLine("|_______________________________________|");
+            // Console.WriteLine("_________________________________________");
+            // Console.WriteLine("|   DOTNET Hospital Management System   |");
+            // Console.WriteLine("|---------------------------------------|");
+            // Console.WriteLine("|                 Login                 |");
+            // Console.WriteLine("|_______________________________________|");
+            Utils.GenerateMenu("Login");
 
             Console.WriteLine("\nID: ");
             int id = Convert.ToInt32(Console.ReadLine());

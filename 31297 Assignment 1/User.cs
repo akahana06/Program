@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace AssignmentApp
 {
@@ -10,12 +11,13 @@ namespace AssignmentApp
         public string address;
         public string email;
         public string phone;
+        public ArrayList appointments = new ArrayList();
 
         public enum Role
         {
-            Patient,
-            Doctor,
-            Admin
+            P,
+            D,
+            A
         }
         // upate
         public abstract void MainMenu();
