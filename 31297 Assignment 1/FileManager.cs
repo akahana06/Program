@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using static System.Random;
 using System.Collections;
 using System.Net;
 using System.Numerics;
@@ -13,9 +15,14 @@ namespace AssignmentApp
         public static void InitialiseUsers(string filename)
         {
             StreamReader sr = new StreamReader(filename);
+            FileStream file = new FileStream("users.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            Random rnd = new Random();
             while (!sr.EndOfStream)
             {
                 string line = sr.ReadLine();
+                int id = rnd.Next(10000, 100000);
+                line += "," + id;
+                File.WriteAllText("users.txt", line); // + /n mayb
                 string[] u = line.Split(',');
                 if (u[0] == "A")
                 {

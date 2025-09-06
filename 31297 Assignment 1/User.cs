@@ -28,10 +28,10 @@ namespace AssignmentApp
             string[] u = line.Split(',');
             id = Convert.ToInt32(u[1]);
             password = u[2];
-            name = u[3];
-            address = u[4];
-            email = u[5];
-            phone = u[6];
+            name = u[1];
+            address = u[2];
+            email = u[3];
+            phone = u[4];
         }
 
     }
