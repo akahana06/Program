@@ -26,12 +26,21 @@ namespace AssignmentApp
         public void LoadUser(string line)
         {
             string[] u = line.Split(',');
+<<<<<<< Updated upstream
             id = Convert.ToInt32(u[1]);
             password = u[2];
             name = u[1];
             address = u[2];
             email = u[3];
             phone = u[4];
+=======
+            name = u[1];
+            email = u[2];
+            phone = u[3];
+            address = u[4];
+            password = u[5];
+            id = Convert.ToInt32(u[6]); // test
+>>>>>>> Stashed changes
         }
 
     }
