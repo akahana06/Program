@@ -15,7 +15,7 @@ namespace AssignmentApp
         public static void InitialiseUsers(string filename)
         {
             StreamReader sr = new StreamReader(filename);
-            FileStream file = new FileStream("users.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            // FileStream file = new FileStream("users.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             Random rnd = new Random();
             while (!sr.EndOfStream)
             {
