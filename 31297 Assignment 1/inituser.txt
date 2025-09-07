@@ -1,3 +1,0 @@
-A,Admin Istrator,admin@gmail.com,0400111111,28 Admin Rd,ADMIN
-D,Dr Guy,doc@gmail.com,0402222222,27 Doctor Dr,DOCTOR
-P,Patient Zero,pat@gmail.com,0403333333,26 Pat Pd,PATIENT

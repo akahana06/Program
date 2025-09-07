@@ -17,12 +17,13 @@ namespace AssignmentApp
             StreamReader sr = new StreamReader(filename);
             // FileStream file = new FileStream("users.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             Random rnd = new Random();
+            File.WriteAllText("users.txt", "");
             while (!sr.EndOfStream)
             {
                 string line = sr.ReadLine();
                 int id = rnd.Next(10000, 100000);
                 line += "," + id;
-                File.WriteAllText("users.txt", line); // + /n mayb
+                File.AppendAllText("users.txt", line + Environment.NewLine);
                 string[] u = line.Split(',');
                 if (u[0] == "A")
                 {

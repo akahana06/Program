@@ -16,7 +16,7 @@ namespace AssignmentApp
             int whitespace = 39;
             int len = txt.Length;
 
-            whitespace =- len;
+            whitespace = whitespace - len;
 
             string line = "|";
             for (int i = 0; i < whitespace / 2; i++)

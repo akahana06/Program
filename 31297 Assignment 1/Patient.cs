@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Net;
 using System.Numerics;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using static AssignmentApp.User;
 
@@ -20,10 +21,19 @@ namespace AssignmentApp
         public override void MainMenu()
         {
             int choice = 0;
-            while (choice < 1 && choice > 6)
+            while (true) 
             {
                 PrintMenu();
-                switch (choice = Convert.ToInt32(Console.ReadKey()))
+                try
+                {
+                    choice = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Please enter a valid number");
+                    continue;
+                }
+                switch (choice)
                 {
                     case 1:
                         ListPatientDetails();
@@ -32,31 +42,28 @@ namespace AssignmentApp
                         ListMyDoctorDetails();
                         break;
                     case 3:
-                        ListMyAppointments();
+                        base.ListMyAppointments();
                         break;
                     case 4:
                         BookAppointment();
                         break;
                     case 5:
-                        break;
+                        AssignmentApp.Login();
+                        return;
                     case 6:
+                        Console.WriteLine("Exiting System...");
                         break;
                     default:
                         Console.WriteLine("Invalid Choice.");
                         break;
-
-                }
+                    }
+                if (choice == 6) return;
             }
-            
         }
 
         public void PrintMenu()
         {
-            // Console.WriteLine("_________________________________________");
-            // Console.WriteLine("|   DOTNET Hospital Management System   |");
-            // Console.WriteLine("|---------------------------------------|");
-            // Console.WriteLine("|             Patient Menu              |");
-            // Console.WriteLine("|_______________________________________|");
+            Console.Clear();
             Utils.GenerateMenu("Patient Menu");
 
             Console.WriteLine("Welcome to DOTNET Hospital Management System {0}", this.name);
@@ -71,45 +78,53 @@ namespace AssignmentApp
 
         public void ListPatientDetails()
         {
-            // Console.WriteLine("_________________________________________");
-            // Console.WriteLine("|   DOTNET Hospital Management System   |");
-            // Console.WriteLine("|---------------------------------------|");
-            // Console.WriteLine("|              My Details               |");
-            // Console.WriteLine("|_______________________________________|");
+            Console.Clear();
             Utils.GenerateMenu("My Details");
 
-            Console.WriteLine("\n{0}'s Details\n");
+            Console.WriteLine("\n{0}'s Details\n", this.name);
             Console.WriteLine("Patient ID: {0}", this.id);
             Console.WriteLine("Full Name: {0}", this.name);
             Console.WriteLine("Address: {0}", this.address);
             Console.WriteLine("Email: {0}", this.email);
-            Console.WriteLine("Phone: ", this.phone);
+            Console.WriteLine("Phone: {0}", this.phone);
+
+            Console.Write("\nPress any key to return to menu:");
 
             Console.ReadKey();
-            MainMenu();
         }
 
         public void ListMyDoctorDetails()
         {
-            // Console.WriteLine("_________________________________________");
-            // Console.WriteLine("|   DOTNET Hospital Management System   |");
-            // Console.WriteLine("|---------------------------------------|");
-            // Console.WriteLine("|               My Doctor               |");
-            // Console.WriteLine("|_______________________________________|");
+            Console.Clear();
             Utils.GenerateMenu("My Doctor");
+            
+            if (doctor == null)
+            {
+                Console.WriteLine("\nYou currently have no doctor. \nPlease book an appointment to view your doctor's details.");
+                Console.Write("\nPress any key to return to menu:");
+                Console.ReadKey();
+                return;
+            }
 
             Console.WriteLine("\nYour doctor:\n");
             Console.WriteLine("Name                | Email Address        | Phone      | Address");
             Console.WriteLine("------------------------------------------------------------------------------------");
-            
+            Console.WriteLine(doctor.ToString());
+
+            Console.Write("\nPress any key to return to menu:");
+            Console.ReadKey();
         }
+
+
 
         public void BookAppointment()
         {
+            Console.Clear();
+
             Utils.GenerateMenu("Book Appointment");
             if (doctor == null)
             {
-                Console.WriteLine("You are not registered with any doctor! Please choose which doctor you would like to register");
+                Console.WriteLine("\nYou are not registered with any doctor! Please choose which doctor you would like to register");
                 User[] doctors = new User[5];
                 int num = 1;
                 foreach (User u in FileManager.users)
@@ -121,32 +136,17 @@ namespace AssignmentApp
                         num++;
                     }
                 }
-                Console.WriteLine("Please choose a doctor:");
+                Console.Write("\nPlease choose a doctor: ");
                 doctor = (Doctor)doctors[Convert.ToInt32(Console.ReadLine()) - 1];
             }
-            Console.WriteLine("You are booking a new appointment with {0}", doctor.name);
-            Console.WriteLine("Description of the appointment: ");
+            Console.WriteLine("\nYou are booking a new appointment with {0}", doctor.name);
+            Console.Write("Description of the appointment: ");
             string desc = Console.ReadLine();
             Appointment apt = new Appointment(this, doctor, desc);
-            Console.WriteLine("The appointment has been booked successfully");
+            Console.WriteLine("\nThe appointment has been booked successfully");
+            Console.Write("\nPress any key to return to menu:");
 
             Console.ReadKey();
-            MainMenu();
-        }
-
-        public void ListMyAppointments()
-        {
-            Utils.GenerateMenu("My Appointments");
-            Console.WriteLine("Appointments for {0}", this.name);
-            Console.WriteLine("Doctor              | Patient           | Description");
-            Console.WriteLine("---------------------------------------------------------------------");
-            foreach (Appointment a in appointments)
-            {
-                Console.WriteLine(a.ToString());
-            }
-
-            Console.ReadKey();
-            MainMenu();
         }
 
         public void LoadUser(string line)
