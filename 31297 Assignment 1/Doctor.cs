@@ -79,8 +79,13 @@ namespace AssignmentApp
         public void PatientDoctorText(Patient p)
         {
             string line;
+            Doctor d = p.doctor;
+            int maxName = 20;
+            int maxEMail = 21;
+            int maxPhone = 11;
+            
             line = (p.name.Length > maxName ? p.name.Substring(0, maxName) : p.name.PadRight(maxName)) + "| ";
-            line = (this.name.Length > maxName ? this.name.Substring(0, maxName) : this.name.PadRight(maxName)) + "| ";
+            line = (d.name.Length > maxName ? d.name.Substring(0, maxName) : this.name.PadRight(maxName)) + "| ";
             line += (p.email.Length > maxEMail ? name.Substring(0, maxEMail) : name.PadRight(maxEMail)) + "| ";
             line += (p.phone.Length > maxPhone ? name.Substring(0, maxPhone) : name.PadRight(maxPhone)) + "| ";
             line += p.address;
@@ -169,9 +174,7 @@ namespace AssignmentApp
             //"Name                | Email Address        | Phone      | Address"
             // 12345678901234567890| 123456789012345678901| 12345678901|
             string line;
-            int maxName = 20;
-            int maxEMail = 21;
-            int maxPhone = 11;
+            
 
             line = (name.Length > maxName ? name.Substring(0, maxName) : name.PadRight(maxName)) + "| ";
             line += (email.Length > maxEMail ? name.Substring(0, maxEMail) : name.PadRight(maxEMail)) + "| ";
