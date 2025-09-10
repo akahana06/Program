@@ -9,11 +9,17 @@ namespace AssignmentApp
         public int id;
         public string password;
         public string name;
-        public string address;
         public string email;
         public string phone;
+        public string address;
+        
         public ArrayList appointments = new ArrayList();
 
+        public User()
+        {
+            id = 0;
+            password = name = email = phone = address = "";
+        }
         public enum Role
         {
             P,
@@ -38,8 +44,7 @@ namespace AssignmentApp
             }
 
             Console.WriteLine("\nAppointments for {0}", this.name);
-            Console.WriteLine("\nDoctor              | Patient           | Description");
-            Console.WriteLine("---------------------------------------------------------------------");
+            Utils.AppointmentTitle();
             foreach (Appointment a in appointments)
             {
                 Console.WriteLine(a.ToString());

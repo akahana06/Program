@@ -70,35 +70,13 @@ namespace AssignmentApp
             Console.WriteLine("7. Exit\n");
         }
 
-        public void PatientDoctorTitle()
-        {
-            Console.WriteLine("\nPatient                | Doctor                | Email Address        | Phone      | Address");
-            Console.WriteLine("-----------------------------------------------------------------------------------------------------------");
-        }
-
-        public void PatientDoctorText(Patient p)
-        {
-            string line;
-            Doctor d = p.doctor;
-            int maxName = 20;
-            int maxEMail = 21;
-            int maxPhone = 11;
-            
-            line = (p.name.Length > maxName ? p.name.Substring(0, maxName) : p.name.PadRight(maxName)) + "| ";
-            line = (d.name.Length > maxName ? d.name.Substring(0, maxName) : this.name.PadRight(maxName)) + "| ";
-            line += (p.email.Length > maxEMail ? name.Substring(0, maxEMail) : name.PadRight(maxEMail)) + "| ";
-            line += (p.phone.Length > maxPhone ? name.Substring(0, maxPhone) : name.PadRight(maxPhone)) + "| ";
-            line += p.address;
-            Console.WriteLine(line);
-        }
 
         public void ListMyDetails()
         {
             Console.Clear();
             Utils.GenerateMenu("My Details");
 
-            Console.WriteLine("\nName                | Email Address        | Phone      | Address");
-            Console.WriteLine("------------------------------------------------------------------------------------");
+            Utils.DoctorDetailTitle();
             Console.WriteLine(this.ToString());
 
             Console.Write("\nPress any key to return to menu:");
@@ -107,19 +85,14 @@ namespace AssignmentApp
 
         public void ListMyPatients()
         {
-            string line;
-            int maxName = 20;
-            int maxEMail = 21;
-            int maxPhone = 11;
-
             Console.Clear();
             Utils.GenerateMenu("My Patients");
 
             Console.WriteLine("\nPatiens assigned to {0}:", name);
-            PatientDoctorTitle();
+            Utils.PatientDoctorTitle();
             foreach (Appointment a in appointments)
             {
-                PatientDoctorText(a.Patient);
+                Console.WriteLine(a.Patient.ToString());
             }
 
             Console.Write("\nPress any key to return to menu:");
@@ -157,14 +130,15 @@ namespace AssignmentApp
                     Console.WriteLine("Invalid ID: must be an int");
                 }
             }
-            PatientDoctorTitle();
-            PatientDoctorText(pat);
+            Console.WriteLine("Details for {0}\n", pat.name);
+            Utils.PatientDoctorTitle();
+            Console.WriteLine(pat.ToString());
 
             Console.Write("\nPress any key to return to menu: ");
             Console.ReadKey();
         }
 
-        public void LoadUser(string line)
+        public new void LoadUser(string line)
         {
             base.LoadUser(line);
         }
@@ -174,7 +148,9 @@ namespace AssignmentApp
             //"Name                | Email Address        | Phone      | Address"
             // 12345678901234567890| 123456789012345678901| 12345678901|
             string line;
-            
+            int maxName = 20;
+            int maxEMail = 21;
+            int maxPhone = 11;
 
             line = (name.Length > maxName ? name.Substring(0, maxName) : name.PadRight(maxName)) + "| ";
             line += (email.Length > maxEMail ? name.Substring(0, maxEMail) : name.PadRight(maxEMail)) + "| ";

@@ -11,17 +11,17 @@ namespace AssignmentApp
     class Patient : User
     {
 
-        public Doctor doctor;
+        public Doctor doctor = new Doctor();
 
         public Patient()
         {
-            UserRole = Role.P;
+            UserRole = Role.P;        
         }
 
         public override void MainMenu()
         {
             int choice = 0;
-            while (true) 
+            while (true)
             {
                 PrintMenu();
                 try
@@ -56,7 +56,7 @@ namespace AssignmentApp
                     default:
                         Console.WriteLine("Invalid Choice.");
                         break;
-                    }
+                }
                 if (choice == 6) return;
             }
         }
@@ -97,7 +97,7 @@ namespace AssignmentApp
         {
             Console.Clear();
             Utils.GenerateMenu("My Doctor");
-            
+
             if (doctor == null)
             {
                 Console.WriteLine("\nYou currently have no doctor. \nPlease book an appointment to view your doctor's details.");
@@ -107,8 +107,7 @@ namespace AssignmentApp
             }
 
             Console.WriteLine("\nYour doctor:\n");
-            Console.WriteLine("Name                | Email Address        | Phone      | Address");
-            Console.WriteLine("------------------------------------------------------------------------------------");
+            Utils.DoctorDetailTitle();
             Console.WriteLine(doctor.ToString());
 
             Console.Write("\nPress any key to return to menu:");
@@ -144,14 +143,30 @@ namespace AssignmentApp
             string desc = Console.ReadLine();
             Appointment apt = new Appointment(this, doctor, desc);
             Console.WriteLine("\nThe appointment has been booked successfully");
-            Console.Write("\nPress any key to return to menu:");
+            Console.Write("\nPress any key to return to menu: ");
 
             Console.ReadKey();
         }
 
-        public void LoadUser(string line)
+        public new void LoadUser(string line)
         {
             base.LoadUser(line);
+        }
+
+        public override string ToString()
+        {
+            string line;
+            Doctor d = doctor;
+            int maxName = 20;
+            int maxEMail = 21;
+            int maxPhone = 11;
+
+            line = (name.Length > maxName ? name.Substring(0, maxName) : name.PadRight(maxName)) + "| ";
+            line = (d.name.Length > maxName ? d.name.Substring(0, maxName) : d.name.PadRight(maxName)) + "| ";
+            line += (email.Length > maxEMail ? email.Substring(0, maxEMail) : email.PadRight(maxEMail)) + "| ";
+            line += (phone.Length > maxPhone ? phone.Substring(0, maxPhone) : phone.PadRight(maxPhone)) + "| ";
+            line += address;
+            return line;
         }
 
     }

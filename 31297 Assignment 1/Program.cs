@@ -8,6 +8,7 @@ namespace AssignmentApp
         {
 
             // temp login
+            FileManager.WriteInitUsers();
             FileManager.InitialiseUsers("inituser.txt");
             Login();
             Console.WriteLine("Thank You!");
