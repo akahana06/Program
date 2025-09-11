@@ -15,7 +15,9 @@ namespace AssignmentApp
 
         public Patient()
         {
-            UserRole = Role.P;        
+            UserRole = Role.P;
+            id = 0;
+            password = name = email = phone = address = "";
         }
 
         public override void MainMenu()
@@ -30,7 +32,8 @@ namespace AssignmentApp
                 }
                 catch (FormatException)
                 {
-                    Console.WriteLine("Please enter a valid number");
+                    Console.WriteLine("Please enter a valid number.\nPress any key to retry...");
+                    Console.ReadKey();
                     continue;
                 }
                 switch (choice)
@@ -49,12 +52,14 @@ namespace AssignmentApp
                         break;
                     case 5:
                         AssignmentApp.Login();
+                        choice = 6;
                         return;
                     case 6:
                         Console.WriteLine("Exiting System...");
                         break;
                     default:
-                        Console.WriteLine("Invalid Choice.");
+                        Console.WriteLine("Please enter a valid number.\nPress any key to retry...");
+                        Console.ReadKey();
                         break;
                 }
                 if (choice == 6) return;
@@ -98,7 +103,7 @@ namespace AssignmentApp
             Console.Clear();
             Utils.GenerateMenu("My Doctor");
 
-            if (doctor == null)
+            if (doctor.id == 0)
             {
                 Console.WriteLine("\nYou currently have no doctor. \nPlease book an appointment to view your doctor's details.");
                 Console.Write("\nPress any key to return to menu:");
@@ -121,7 +126,7 @@ namespace AssignmentApp
             Console.Clear();
 
             Utils.GenerateMenu("Book Appointment");
-            if (doctor == null)
+            if (doctor.id == 0)
             {
                 Console.WriteLine("\nYou are not registered with any doctor! Please choose which doctor you would like to register");
                 User[] doctors = new User[5];
@@ -157,13 +162,12 @@ namespace AssignmentApp
         {
             string line;
             Doctor d = doctor;
-            int maxName = 20;
-            int maxEMail = 21;
+            int maxName = 22;
             int maxPhone = 11;
 
             line = (name.Length > maxName ? name.Substring(0, maxName) : name.PadRight(maxName)) + "| ";
-            line = (d.name.Length > maxName ? d.name.Substring(0, maxName) : d.name.PadRight(maxName)) + "| ";
-            line += (email.Length > maxEMail ? email.Substring(0, maxEMail) : email.PadRight(maxEMail)) + "| ";
+            line += (d.name.Length > maxName ? d.name.Substring(0, maxName) : d.name.PadRight(maxName)) + "| ";
+            line += (email.Length > maxName ? email.Substring(0, maxName) : email.PadRight(maxName)) + "| ";
             line += (phone.Length > maxPhone ? phone.Substring(0, maxPhone) : phone.PadRight(maxPhone)) + "| ";
             line += address;
             return line;

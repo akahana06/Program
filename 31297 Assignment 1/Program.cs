@@ -6,7 +6,7 @@ namespace AssignmentApp
     {
         public static void Main(string[] args)
         {
-
+            
             // temp login
             FileManager.WriteInitUsers();
             FileManager.InitialiseUsers("inituser.txt");

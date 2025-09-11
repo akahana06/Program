@@ -31,14 +31,13 @@ namespace AssignmentApp
             get { return Doctor; }
         }
 
-        public string ToString()
+        public override string ToString()
         {
             string line;
-            int maxDoc = 20;
-            int maxPat = 18;
+            int maxName = 22;
 
-            line = (doctor.name.Length > maxDoc ? doctor.name.Substring(0, maxDoc) : doctor.name.PadRight(maxDoc)) + "| ";
-            line += (patient.name.Length > maxPat ? patient.name.Substring(0, maxPat) : patient.name.PadRight(maxPat)) + "| ";
+            line = (doctor.name.Length > maxName ? doctor.name.Substring(0, maxName) : doctor.name.PadRight(maxName)) + "| ";
+            line += (patient.name.Length > maxName ? patient.name.Substring(0, maxName) : patient.name.PadRight(maxName)) + "| ";
             line += desc;
             return line;
         }

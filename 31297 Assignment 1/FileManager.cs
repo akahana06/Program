@@ -24,7 +24,7 @@ namespace AssignmentApp
             text += "P,George Washington,georgewashington@gmail.com,0408354765,1 President St,PATIENT\n";
             text += "P,Mark Leppington,markleppington@gmail.com,0402564926,85 Pittwater St,PATIENT\n";
             text += "P,Patient Zero,patientzero@gmail.com,0400000000,1 Death St,PATIENT";
-            File.WriteAllText("initusers.txt", text);
+            File.WriteAllText("inituser.txt", text);
         }
         public static void InitialiseUsers(string filename)
         {
@@ -63,13 +63,13 @@ namespace AssignmentApp
 
         }
 
-        public static void CheckPatientDetails()
+        public static void CheckPatientDetails(Doctor d)
         {
             Console.Clear();
             Utils.GenerateMenu("Check Patient Details");
 
             int id;
-            Patient pat = new Patient(); 
+            Patient pat = new Patient();
             bool valid = false;
             while (true)
             {
@@ -94,9 +94,16 @@ namespace AssignmentApp
                     Console.WriteLine("Invalid ID: must be an int");
                 }
             }
-            Console.WriteLine("Details for {0}\n", pat.name);
-            Utils.PatientDoctorTitle();
-            Console.WriteLine(pat.ToString());
+
+            if (pat.doctor != d && d.id != 0) // If accessed through Admin, id = 0
+            {
+                Console.WriteLine("You are not {0}'s Doctor", pat.name);
+            } else
+            {
+                Console.WriteLine("\nDetails for {0}", pat.name);
+                Utils.PatientDoctorTitle();
+                Console.WriteLine(pat.ToString());
+            }
 
             Console.Write("\nPress any key to return to menu: ");
             Console.ReadKey();
