@@ -109,32 +109,9 @@ namespace AssignmentApp
             Console.Clear();
             Utils.GenerateMenu("Doctor Details");
 
-            int id;
-            Doctor doc = new Doctor(); 
-            bool valid = false;
-            while (true)
-            {
-                Console.WriteLine("\nPlease enter the ID of the doctor who's details you are checking.");
-                try
-                {
-                    id = Convert.ToInt32(Console.ReadLine());
-                    foreach (User u in FileManager.users)
-                    {
-                        if (id == u.id && u.UserRole == Role.D)
-                        {
-                            valid = true;
-                            doc = (Doctor)u;
-                            break;
-                        }
-                    }
-                    if (valid) break;
-                    Console.WriteLine("ID Not Found");
-                }
-                catch (System.FormatException)
-                {
-                    Console.WriteLine("Invalid ID: must be an int");
-                }
-            }
+            Doctor doc = SearchForDoctor();
+            if (doc.id == 0) return;
+
             Console.WriteLine("Details for {0}\n", doc.name);
             Utils.DoctorDetailTitle();
             Console.WriteLine(doc.ToString());

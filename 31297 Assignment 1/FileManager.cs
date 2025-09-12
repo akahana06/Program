@@ -11,7 +11,7 @@ namespace AssignmentApp
     static class FileManager
     {
         public static ArrayList users = new ArrayList();
-        public static ArrayList appointments = new ArrayList();
+        //public static ArrayList appointments = new ArrayList();
 
         public static void WriteInitUsers()
         {
@@ -29,7 +29,6 @@ namespace AssignmentApp
         public static void InitialiseUsers(string filename)
         {
             StreamReader sr = new StreamReader(filename);
-            // FileStream file = new FileStream("users.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             Random rnd = new Random();
             File.WriteAllText("users.txt", "");
             while (!sr.EndOfStream)
@@ -60,33 +59,76 @@ namespace AssignmentApp
 
             }
             sr.Close();
-
         }
 
-        public static void CheckPatientDetails(Doctor d)
+        public static void LoadData(string userFile, string aptFile)
         {
-            Console.Clear();
-            Utils.GenerateMenu("Check Patient Details");
+            StreamReader userSR = new StreamReader(userFile);
+            while (!userSR.EndOfStream)
+            {
+                string line = userSR.ReadLine();
+                string[] u = line.Split(',');
+                if (u[0] == "A")
+                {
+                    Admin a = new Admin();
+                    a.LoadUser(line);
+                    users.Add(a);
+                }
+                else if (u[0] == "P")
+                {
+                    Patient p = new Patient();
+                    p.LoadUser(line);
+                    users.Add(p);
+                }
+                else if (u[0] == "D")
+                {
+                    Doctor d = new Doctor();
+                    d.LoadUser(line);
+                    users.Add(d);
+                }
 
+            }
+            userSR.Close();
+
+            StreamReader aptSR = new StreamReader(aptFile);
+            while (!aptSR.EndOfStream)
+            {
+                string line = aptSR.ReadLine();
+                string[] details = line.Split(",");
+                Doctor doc = FindDoctor(details[0]);
+                Patient pat = FindPatient(details[1]);
+                string desc = details[2];
+
+                if (doc.id == 0 || pat.id == 0)
+                {
+                    continue;
+                }
+
+                Appointment(doc, pat, desc);
+            }
+            aptSR.Close();
+        }
+
+        public static Doctor SearchForDoctor()
+        {
             int id;
-            Patient pat = new Patient();
-            bool valid = false;
+            Doctor doc = new Doctor();
             while (true)
             {
-                Console.Write("\nEnter the ID of the patient to check: ");
+                Console.WriteLine("\nPlease enter the ID of the doctor who's details you are checking. (Press esc to exit)");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                if (keyInfo.Key == ConsoleKey.Escape)
+                {
+                    Console.WriteLine("Exiting...");
+                    return new Doctor();
+                }
                 try
                 {
-                    id = Convert.ToInt32(Console.ReadLine());
-                    foreach (User u in FileManager.users)
-                    {
-                        if (id == u.id && u.UserRole == Role.P)
-                        {
-                            valid = true;
-                            pat = (Patient)u;
-                            break;
-                        }
-                    }
-                    if (valid) break;
+                    Console.Write(keyInfo.KeyChar);
+                    id = Convert.ToInt32(keyInfo.KeyChar + Console.ReadLine());
+                    doc = FindDoctor(id);
+                    if (doc.id != 0) break;
                     Console.WriteLine("ID Not Found");
                 }
                 catch (System.FormatException)
@@ -94,6 +136,70 @@ namespace AssignmentApp
                     Console.WriteLine("Invalid ID: must be an int");
                 }
             }
+            return doc;
+        }
+
+        public static Doctor FindDoctor(int id)
+        {
+            foreach (User u in FileManager.users)
+            {
+                if (id == u.id && u.UserRole == Role.D)
+                {
+                    return (Doctor)u;
+                }
+            }
+            return new Doctor();
+        }
+
+        public static Patient SearchForPatient()
+        {
+            int id;
+            Patient pat = new Patient();
+            while (true)
+            {
+                Console.WriteLine("\nPlease enter the ID of the patient who's details you are checking. (Press esc to exit)");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                if (keyInfo.Key == ConsoleKey.Escape)
+                {
+                    Console.WriteLine("Exiting...");
+                    return new Patient();
+                }
+                try
+                {
+                    Console.Write(keyInfo.KeyChar);
+                    id = Convert.ToInt32(keyInfo.KeyChar + Console.ReadLine());
+                    pat = FindPatient(id);
+                    if (pat.id != 0) break;
+                    Console.WriteLine("ID Not Found");
+                }
+                catch (System.FormatException)
+                {
+                    Console.WriteLine("Invalid ID: must be an int");
+                }
+            }
+            return pat;
+        }
+
+        public static Patient FindPatient(int id)
+        {
+            foreach (User u in FileManager.users)
+            {
+                if (id == u.id && u.UserRole == Role.P)
+                {
+                    return (Patient)u;
+                }
+            }
+            return new Patient();
+        }
+
+        public static void CheckPatientDetails(Doctor d)
+        {
+            Console.Clear();
+            Utils.GenerateMenu("Check Patient Details");
+
+            Patient pat = SearchForPatient();
+            if (pat.id == 0) return;
 
             if (pat.doctor != d && d.id != 0) // If accessed through Admin, id = 0
             {

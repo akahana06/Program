@@ -146,7 +146,7 @@ namespace AssignmentApp
             Console.WriteLine("\nYou are booking a new appointment with {0}", doctor.name);
             Console.Write("Description of the appointment: ");
             string desc = Console.ReadLine();
-            Appointment apt = new Appointment(this, doctor, desc);
+            Appointment apt = new Appointment(doctor, this, desc);
             Console.WriteLine("\nThe appointment has been booked successfully");
             Console.Write("\nPress any key to return to menu: ");
 

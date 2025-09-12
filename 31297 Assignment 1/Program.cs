@@ -6,10 +6,18 @@ namespace AssignmentApp
     {
         public static void Main(string[] args)
         {
-            
+
             // temp login
             FileManager.WriteInitUsers();
-            FileManager.InitialiseUsers("inituser.txt");
+            Console.WriteLine("Restore previous data? (y/n): ");
+            if (Console.ReadLine().Equals("y"))
+            {
+                FileManager.LoadData("users.txt", "appointments.txt");
+            } else
+            {
+                FileManager.InitialiseUsers("inituser.txt");
+                FileManager.WriteAllText("appointments.txt", "");
+            }
             Login();
             Console.WriteLine("Thank You!");
 
@@ -21,8 +29,8 @@ namespace AssignmentApp
             string pass;
 
             Console.Clear();
-            Console.WriteLine("Debug Mode (Y/N): ");
-            if (Console.ReadLine().Equals("Y"))
+            Console.WriteLine("Debug Mode (y/n): ");
+            if (Console.ReadLine().Equals("y"))
             {
                 Console.WriteLine("Debug Enabled");
                 StreamReader sr = new StreamReader("users.txt");
